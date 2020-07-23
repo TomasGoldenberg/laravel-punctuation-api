@@ -23,3 +23,4 @@ Route::post("/regist", "RegisterController@register");
 
 Route::post("/sanctum/token", "UserTokenController");
 Route::resource("/products","ProductController");
+Route::resource("/categories","CategoryController");

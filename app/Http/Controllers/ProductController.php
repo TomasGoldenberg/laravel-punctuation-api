@@ -3,9 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Product;
-use Illuminate\Http\Request;
 
+//validations
+use App\Http\Requests\UpdateProductRequest;
+use App\Http\Requests\StoreProductRequest;
+
+//resources
 use App\Http\Resources\ProductResource;
+use App\Http\Resources\ProductCollection;
+
 
 class ProductController extends Controller
 {    
@@ -21,11 +27,11 @@ class ProductController extends Controller
 
     public function index()
     {
-        return ProductResource::collection(Product::all());
+        return new ProductCollection(Product::all());
     }
 
 
-    public function store(Request $request)
+    public function store(StoreProductRequest $request)
     {
        $product = Product::create($request->all());
 
@@ -38,7 +44,7 @@ class ProductController extends Controller
         return $product; //redefinimos el model con el que trabajaremos aqui
     }
 
-    public function update(Request $request, Product $product)
+    public function update(UpdateProductRequest $request, Product $product)
     {
         $product->update($request->all());
     }

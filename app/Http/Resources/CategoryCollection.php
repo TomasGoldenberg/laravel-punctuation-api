@@ -2,18 +2,20 @@
 
 namespace App\Http\Resources;
 
-use Illuminate\Http\Resources\Json\ResourceCollection;
-use App\Http\Resources\ProductResource;
+use App\Http\Resources\CategoryResource;
 
-class ProductCollection extends ResourceCollection
+use Illuminate\Http\Resources\Json\ResourceCollection;
+
+class CategoryCollection extends ResourceCollection
 {
 
-    public $collects = ProductResource::class;
+    public $collects = CategoryResource::class;
+    
     public function toArray($request)
     {
         return [
             "data" => $this->collection,
-            "links" => "metadata qeu quieras"
+            "links"=> "alguna metadata"
         ];
     }
 }

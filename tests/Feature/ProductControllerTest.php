@@ -30,7 +30,7 @@ class ProductControllerTest extends TestCase
 
         $response->assertSuccessful();
         
-        $response->assertJsonCount(5);
+        $response->assertJsonCount(5,"data");
     }
 
     public function test_create_new_product()
