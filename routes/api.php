@@ -22,5 +22,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post("/regist", "RegisterController@register");
 
 Route::post("/sanctum/token", "UserTokenController");
-Route::resource("/products","ProductController")
-->middleware("auth:sanctum");
+Route::resource("/products","ProductController");
