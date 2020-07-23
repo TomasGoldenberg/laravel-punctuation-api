@@ -3,9 +3,11 @@
 namespace Tests\Feature;
 
 use App\Product;
+use App\Category;
 use App\User;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use Laravel\Sanctum\Sanctum;
 
@@ -16,7 +18,7 @@ class ProductControllerTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-
+        factory(Category::class)->create();
         Sanctum::actingAs(
             factory(User::class)->create()
         );
@@ -24,6 +26,8 @@ class ProductControllerTest extends TestCase
 
     public function test_index()
     {
+   
+
         factory(Product::class, 5)->create();
 
         $response = $this->getJson('/api/products');
@@ -38,6 +42,7 @@ class ProductControllerTest extends TestCase
         $data = [
             'name' => 'Hola',
             'price' => 1000,
+            "category_id" => 1
         ];
         $response = $this->postJson('/api/products', $data);
 

@@ -16,9 +16,19 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->bigIncrements("id");
 
+            $table-> unsignedBigInteger("category_id");
+            $table-> unsignedBigInteger("created_by");
+           
             $table->string("name");
             $table->float("price");
             $table->timestamps();
+
+            $table->foreign("category_id")->references("id")->on("categories")
+                ->onUpdate("cascade");
+
+                $table->foreign("created_by")->references("id")->on("users")
+                ->onUpdate("cascade");
+
         });
     }
 
