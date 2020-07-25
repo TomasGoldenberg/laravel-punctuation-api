@@ -48,7 +48,10 @@ class SendNewsLetterCommand extends Command
 
         }
 
-        $this->info("No se envio ningun correo");
+        if(!$count){
+
+            $this->info("No se envio ningun correo");
+        };
 
         
         
