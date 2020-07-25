@@ -19,6 +19,8 @@ class ProductControllerTest extends TestCase
     {
         parent::setUp();
         factory(Category::class)->create();
+        factory(User::class)->create();
+
         Sanctum::actingAs(
             factory(User::class)->create()
         );
@@ -42,7 +44,9 @@ class ProductControllerTest extends TestCase
         $data = [
             'name' => 'Hola',
             'price' => 1000,
-            "category_id" => 1
+            "category_id" => 1,
+            "created_by" => 1,
+
         ];
         $response = $this->postJson('/api/products', $data);
 
