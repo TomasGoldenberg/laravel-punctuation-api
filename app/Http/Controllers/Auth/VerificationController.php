@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\VerifiesEmails;
+use App\Jobs\SendWelcomeEmail;
+use Illuminate\Http\Request;
 
 class VerificationController extends Controller
 {
@@ -38,5 +40,13 @@ class VerificationController extends Controller
         $this->middleware('auth');
         $this->middleware('signed')->only('verify');
         $this->middleware('throttle:6,1')->only('verify', 'resend');
+    }
+
+    public function verfied(Request $request){
+        //este method se ejecuta cuando un user crea su cuenta
+        //ahora con dispatch dispararemos el job
+
+         //nuestro job necesita el mail y asi lo conseguimos
+        dispatch(new SendWelcomeEmail($request->user()->email));
     }
 }

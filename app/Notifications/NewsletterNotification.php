@@ -40,10 +40,16 @@ class NewsletterNotification extends Notification
      */
     public function toMail($notifiable)
     {
-        return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+        $mailMessage = new MailMessage;
+        $mailMessage->line('Estos son los productos con mas rating en la ultima semana');
+
+        foreach ($this->products as $product) {
+            $mailMessage->line($product['name']);
+        }
+
+        $mailMessage->line('Thank you for using our application!');
+
+        return $mailMessage;
     }
 
     /**
