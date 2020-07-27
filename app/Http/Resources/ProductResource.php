@@ -18,7 +18,7 @@ class ProductResource extends JsonResource
             "id" => (int) $this->id,
             "name" => (string)$this->name,
             "price" => (float) $this->price,
-
+            'user_rating' => $this->averageRating(User::class)
         ];
     }
 }

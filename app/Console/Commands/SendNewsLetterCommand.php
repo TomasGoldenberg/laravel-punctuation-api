@@ -3,6 +3,8 @@
 namespace App\Console\Commands;
 
 use App\User;
+use App\Product;
+
 use App\Notifications\NewsletterNotification;
 
 use Illuminate\Console\Command;
@@ -11,7 +13,10 @@ use Illuminate\Support\Facades\DB;
 class SendNewsLetterCommand extends Command
 {
 
-    protected $signature = 'send:newsletter {emails?*}';
+    protected $signature = 'send:newsletter 
+                                        {emails?*}
+                                        {--s|shedule : si debe ser ejecutado directamente}'
+                                        ;
 
 
     protected $description = 'Envia un Correo Electronicos';
@@ -27,15 +32,25 @@ class SendNewsLetterCommand extends Command
         if($emails){ //que pase en email , los emails del param
             $builder->whereIn("email",$emails);
         }
-
+        $builder->whereNotNull("email_verified_at");
         $count = $builder->count();
 
         
 
         if($count){
-            $this->output->ProgressStart($count);
+            $this->info("se enviaran {$count} correos");
+            
+            if($this->confirm("Estas de acuerdo?"|| $schedule)){
+            
+                $productQuery = Product::query();
+                $productQuery->withCount(['qualifications as average_rating' => function ($query) {
+                    $query->select(DB::raw('coalesce(avg(score),0)'));
+                }])->orderByDesc('average_rating');
+
+                $products = $productQuery->take(6)->get();
 
 
+                $this->output->ProgressStart($count);
             $builder
             ->whereNotNull("email_verified_at")
             ->each( function(User $user){
@@ -43,9 +58,11 @@ class SendNewsLetterCommand extends Command
                 $this->output->progressAdvance();
             } );
 
+            }
+
         $this->info("Se enviaron {$count} correos");
         $this->output->progressFinish();
-
+            return;
         }
 
         if(!$count){

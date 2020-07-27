@@ -28,3 +28,6 @@ Route::resource("/categories","CategoryController");
 
 Route::post("/newsletter" ,"NewsLetterController@sendNews");
 Route::post("/verification" ,"NewsLetterController@sendReminder");
+
+Route::post("/products/{product}/rate",[ProductRatingController::class, "rate"]);
+Route::post("/products/{product}/unrate",[ProductRatingController::class, "unrate"]);
