@@ -39,6 +39,11 @@ trait CanRate
             "score" => $score,
             "rateable_type" => get_class($model)
         ]);
+        
+        //this=qualifier(el que puede calificar),
+        //$model = el modelo que recibimos para calificar
+        //$score =  el puntaje
+        event(new ModelRated($this, $model,$score));
 
         return true;
     }

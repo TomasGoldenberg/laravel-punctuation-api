@@ -35,7 +35,7 @@ class Kernel extends ConsoleKernel
             ->mondays();
 
         $schedule->command(SendEmailVerificationReminderCommand::class)
-            ->onOneServer(); //si tu app esta en mas de 1 server ponemos esto para que solo dispare emails 1 vez
+            ->onOneServer() //si tu app esta en mas de 1 server ponemos esto para que solo dispare emails 1 vez
             ->daily();
 
 
