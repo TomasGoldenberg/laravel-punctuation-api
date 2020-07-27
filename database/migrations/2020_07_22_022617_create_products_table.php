@@ -21,6 +21,7 @@ class CreateProductsTable extends Migration
            
             $table->string("name");
             $table->float("price");
+            $table->text("image_url")->nullable();
             $table->timestamps();
 
             $table->foreign("category_id")->references("id")->on("categories")

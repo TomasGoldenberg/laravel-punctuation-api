@@ -20,4 +20,6 @@ class Product extends Model
     public function createdBy(){
         return $this->belongsTo(User::class);
     }
+
+  
 }
